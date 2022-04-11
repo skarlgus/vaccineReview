@@ -42,12 +42,11 @@ public class mainPageController {
 
         //코로나19 연령별·성별감염 감염 현황 현황 API
         List<HashMap<String, Object>> coronaBaccineMap = service.coronaVaccine();
-        HashMap map = (HashMap<String, Object>)coronaBaccineMap.get(0);
+        HashMap map = (HashMap<String, Object>) coronaBaccineMap.get(0);
         Set<String> keySet = map.keySet();
         for (String key : keySet) {
-            model.addAttribute(key,map.get(key));  //연령대별 확진률 ex) ("0-10",12.11)
+            model.addAttribute(key, map.get(key));  //연령대별 확진률 ex) ("0-10",12.11)
         }
-
 
         
         return "index";

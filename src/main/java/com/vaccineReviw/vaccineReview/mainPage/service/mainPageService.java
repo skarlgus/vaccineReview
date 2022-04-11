@@ -40,7 +40,7 @@ import java.util.List;
 public class mainPageService {
 
     /**************************************************
-     *   note : 직무기술서등록 MAPPER class inject.
+     *   note : mainPage MAPPER class inject.
      * ************************************************/
     private final mainPageMapper mapper;
 
@@ -213,6 +213,8 @@ public class mainPageService {
 
         } catch (Exception e) {
             log.info("[ERROR] 코로나19 백신 현황 API 호출 error");
+            map.put("0","0");
+            listMap.add(map);
         }
         /*xml data json 가공종료*/
 
