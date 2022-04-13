@@ -1,4 +1,4 @@
-package com.vaccineReviw.vaccineReview.mainPage.mapper;
+package com.vaccineReview.mainPage.mapper;
 
 import org.springframework.stereotype.Repository;
 

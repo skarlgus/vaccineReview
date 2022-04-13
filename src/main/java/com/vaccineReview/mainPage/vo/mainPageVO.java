@@ -1,4 +1,4 @@
-package com.vaccineReviw.vaccineReview.mainPage.vo;
+package com.vaccineReview.mainPage.vo;
 
 import lombok.Getter;
 import lombok.Setter;

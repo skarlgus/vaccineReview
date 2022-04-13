@@ -1,6 +1,6 @@
-package com.vaccineReviw.vaccineReview.mainPage.service;
+package com.vaccineReview.mainPage.service;
 
-import com.vaccineReviw.vaccineReview.mainPage.mapper.mainPageMapper;
+import com.vaccineReview.mainPage.mapper.mainPageMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.json.JSONArray;
@@ -219,5 +219,87 @@ public class mainPageService {
         /*xml data json 가공종료*/
 
         return listMap;
+    }
+
+    /**************************************************
+     *   note : 코로나19 백신 현황 API
+     * ************************************************/
+    public HashMap<String, Integer> coronaVaccineNow() {
+
+        //retrun map
+        HashMap<String, Integer> map = new HashMap<String, Integer>();
+
+        /*코로나19 백신 현황 API 호출*/
+        try{
+
+            StringBuilder urlBuilder = new StringBuilder("https://nip.kdca.go.kr/irgd/cov19stats.do"); /*URL*/
+            urlBuilder.append("?" + URLEncoder.encode("list","UTF-8") + "all");
+
+            URL url = new URL(urlBuilder.toString());
+
+            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+
+            conn.setRequestMethod("GET");
+
+            conn.setRequestProperty("Content-type", "application/json");
+
+            log.info("코로나19 백신 현황 API Response code: " + conn.getResponseCode());
+
+            BufferedReader rd;
+
+            if(conn.getResponseCode() >= 200 && conn.getResponseCode() <= 300) {
+                rd = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+            } else {
+                rd = new BufferedReader(new InputStreamReader(conn.getErrorStream()));
+            }
+
+            StringBuilder sb = new StringBuilder();
+
+            String line;
+
+            while ((line = rd.readLine()) != null) {
+                sb.append(line);
+            }
+
+            rd.close();
+
+            conn.disconnect();
+            /*코로나19 백신 현황 API 종료*/
+
+            /*xml data json 가공*/
+            JSONObject jObject = XML.toJSONObject(sb.toString());
+
+            String text = jObject.toString(4);  //xml data 확인
+
+            JSONObject jResponse = jObject.getJSONObject("response");
+
+            JSONObject jBody = jResponse.getJSONObject("body");
+
+            JSONObject jItems = jBody.getJSONObject("items");
+
+            JSONArray jArray = jItems.getJSONArray("item");
+
+            if(jArray.length() > 0){
+                JSONObject jsonObj = jArray.getJSONObject(2);
+
+                int thirdCnt = (int) jsonObj.get("thirdCnt");  //3차 접종자 수
+
+                double totalKorean = 51780000;   //대한민국 인구 수
+                
+                double thirdCntR = (double) 100 / totalKorean * thirdCnt;   //3차 접종률
+
+                int thirdCntRate = (int) Math.round(thirdCntR);   //반올림
+
+                map.put("thirdCntRate",thirdCntRate);
+
+            }
+
+        } catch (Exception e) {
+            log.info("[ERROR] 코로나19 백신 현황 API 호출 error");
+            map.put("thirdCntRate",0);
+        }
+        /*xml data json 가공종료*/
+
+        return map;
     }
 }

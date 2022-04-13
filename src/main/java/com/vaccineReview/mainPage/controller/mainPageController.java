@@ -1,6 +1,6 @@
-package com.vaccineReviw.vaccineReview.mainPage.controller;
+package com.vaccineReview.mainPage.controller;
 
-import com.vaccineReviw.vaccineReview.mainPage.service.mainPageService;
+import com.vaccineReview.mainPage.service.mainPageService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map.Entry;
 import java.util.Set;
 
 /**
@@ -41,12 +40,16 @@ public class mainPageController {
         model.addAttribute("deathCnt",coronaNowMap.get("deathCnt"));    //누적사망자 수
 
         //코로나19 연령별·성별감염 감염 현황 현황 API
-        List<HashMap<String, Object>> coronaBaccineMap = service.coronaVaccine();
-        HashMap map = (HashMap<String, Object>) coronaBaccineMap.get(0);
+        List<HashMap<String, Object>> coronaVaccineMap = service.coronaVaccine();
+        HashMap map = (HashMap<String, Object>) coronaVaccineMap.get(0);
         Set<String> keySet = map.keySet();
         for (String key : keySet) {
             model.addAttribute(key, map.get(key));  //연령대별 확진률 ex) ("0-10",12.11)
         }
+
+        //코로나19 백신 누적 API
+        HashMap<String, Integer> coronaVaccineNowMap = service.coronaVaccineNow();
+        model.addAttribute("thirdCntRate",coronaVaccineNowMap.get("thirdCntRate"));  //3차 접종률
 
         
         return "index";
