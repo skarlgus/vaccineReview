@@ -1,9 +1,13 @@
-package com.vaccineReview.login.snsLogin;
+package com.vaccineReview.security;
 
+import com.vaccineReview.domain.Role;
+import com.vaccineReview.domain.User;
 import lombok.Builder;
+import lombok.Getter;
 
 import java.util.Map;
 
+@Getter
 public class OAuthAttributes {
 
     private Map<String, Object> attributes; // OAuth2 반환하는 유저 정보 Map
@@ -23,18 +27,27 @@ public class OAuthAttributes {
 
     public static OAuthAttributes of(String registrationId, String userNameAttributeName, Map<String, Object> attributes){
 
-        //if("kakao".equals(registrationId)){
+        if("kakao".equals(registrationId)){
             return ofKakao("id", attributes);
-        //}
+        }
         /*
         if("naver".equals(registrationId)){
             return ofNaver("id", attributes);
         }
-
+        */
         return ofGoogle(userNameAttributeName, attributes);
-
-         */
     }
+
+    private static OAuthAttributes ofGoogle(String userNameAttributeName, Map<String, Object> attributes) {
+        return OAuthAttributes.builder()
+                .name((String) attributes.get("name"))
+                .email((String) attributes.get("email"))
+                .picture((String) attributes.get("picture"))
+                .attributes(attributes)
+                .nameAttributeKey(userNameAttributeName)
+                .build();
+    }
+
 
     private static OAuthAttributes ofKakao(String userNameAttributeName, Map<String, Object> attributes) {
         Map<String,Object> response = (Map<String, Object>)attributes.get("kakao_account");
@@ -48,4 +61,13 @@ public class OAuthAttributes {
                 .build();
     }
 
+
+    public User toEntity() {
+        return User.builder()
+                .name(name)
+                .email(email)
+                .picture(picture)
+                .role(Role.GUEST)
+                .build();
+    }
 }

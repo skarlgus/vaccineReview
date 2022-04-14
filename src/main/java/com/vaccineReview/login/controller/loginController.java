@@ -1,9 +1,14 @@
 package com.vaccineReview.login.controller;
 
 import com.vaccineReview.login.service.loginService;
+import com.vaccineReview.security.SessionUser;
 import lombok.RequiredArgsConstructor;
+import lombok.Value;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+
+import javax.servlet.http.HttpSession;
 
 /**
  * 소셜로그인 Controller
@@ -25,17 +30,19 @@ public class loginController {
 
     private final loginService service;
 
-    @GetMapping("/user/kakao/callback")
-    public String kakaoLogin(String code) {
+    private final HttpSession httpSession;
 
-        // authorizedCode: 카카오 서버로부터 받은 인가 코드
-        //service.kakaoLogin(code);
-
+    @GetMapping("/login/oauth2/kakao/callBack")
+    public String kakaoLoginCallBack(String code) {
+        System.out.println("로그인성공");
         return "redirect:/";
     }
 
     @GetMapping("/layout/login")
     public String login() {
+
+
         return "layout/login";
     }
+
 }

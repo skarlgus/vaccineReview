@@ -9,6 +9,10 @@ spring:
         oauth2:
             client:
                 registration:
+                    google:
+                        client-id: 710944517798-ldnq50k0mkb77qrsb8erdi0a45rld7cg.apps.googleusercontent.com
+                        client-secret: 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
+                        scope: profile, email
                     kakao:
                         client-id: 221e538f782c6f5b3fffb0d2da87f89c
                         redirect-uri: "{baseUrl}/{action}/oauth2/code/{registrationId}"
