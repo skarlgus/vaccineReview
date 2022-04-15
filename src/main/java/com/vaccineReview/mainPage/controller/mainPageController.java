@@ -7,6 +7,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
 import java.io.IOException;
+import java.text.DecimalFormat;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Set;
@@ -34,23 +35,36 @@ public class mainPageController {
     @GetMapping("/")
     public String main(Model model) throws IOException {
 
+        DecimalFormat decFormat = new DecimalFormat("###,###");
+
         //코로나19 감염 현황 API
         HashMap<String, Integer> coronaNowMap = service.coronaNow();
-        model.addAttribute("decideCnt",coronaNowMap.get("decideCnt"));  //누적확진자 수
-        model.addAttribute("deathCnt",coronaNowMap.get("deathCnt"));    //누적사망자 수
+        model.addAttribute("decideCnt",decFormat.format(coronaNowMap.get("decideCnt"))+"명");  //누적확진자 수
+        model.addAttribute("deathCnt",decFormat.format(coronaNowMap.get("deathCnt"))+"명");    //누적사망자 수
 
         //코로나19 연령별·성별감염 감염 현황 현황 API
         List<HashMap<String, Object>> coronaVaccineMap = service.coronaVaccine();
         HashMap map = (HashMap<String, Object>) coronaVaccineMap.get(0);
+        model.addAttribute("A", map.get("0-9")+"%");
+        model.addAttribute("B", map.get("10-19")+"%");
+        model.addAttribute("C", map.get("20-29")+"%");
+        model.addAttribute("D", map.get("30-39")+"%");
+        model.addAttribute("E", map.get("40-49")+"%");
+        model.addAttribute("F", map.get("50-59")+"%");
+        model.addAttribute("G", map.get("60-69")+"%");
+        model.addAttribute("H", map.get("70-79")+"%");
+        model.addAttribute("I", map.get("80 이상")+"%");
+
+        /*
         Set<String> keySet = map.keySet();
         for (String key : keySet) {
             model.addAttribute(key, map.get(key));  //연령대별 확진률 ex) ("0-10",12.11)
         }
+        */
 
         //코로나19 백신 누적 API
         HashMap<String, Integer> coronaVaccineNowMap = service.coronaVaccineNow();
-        model.addAttribute("thirdCntRate",coronaVaccineNowMap.get("thirdCntRate"));  //3차 접종률
-
+        model.addAttribute("thirdCntRate",coronaVaccineNowMap.get("thirdCntRate")+"%");  //3차 접종률
         
         return "index";
     };

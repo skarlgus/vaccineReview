@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
 
 <head>
 
@@ -386,7 +386,7 @@
                                         <div class="col mr-2">
                                             <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
                                                 누적 확진자 수</div>
-                                            <div class="h5 mb-0 font-weight-bold text-gray-800">14,015,688명</div>
+                                            <div class="h5 mb-0 font-weight-bold text-gray-800"><p th:text="${decideCnt}"/></div>
                                         </div>
                                         <div class="col-auto">
                                             <i class="fas fa-calendar fa-2x text-gray-300"></i>
@@ -404,7 +404,7 @@
                                         <div class="col mr-2">
                                             <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
                                                 누적 사망자 수</div>
-                                            <div class="h5 mb-0 font-weight-bold text-gray-800">215,000명</div>
+                                            <div class="h5 mb-0 font-weight-bold text-gray-800"><p th:text="${deathCnt}"/></div>
                                         </div>
                                         <div class="col-auto">
                                             <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
@@ -424,12 +424,12 @@
                                             </div>
                                             <div class="row no-gutters align-items-center">
                                                 <div class="col-auto">
-                                                    <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">82%</div>
+                                                    <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800"><p th:text="${thirdCntRate}"/></div>
                                                 </div>
                                                 <div class="col">
                                                     <div class="progress progress-sm mr-2">
                                                         <div class="progress-bar bg-info" role="progressbar"
-                                                            style="width: 82%" aria-valuenow="82" aria-valuemin="0"
+                                                             style th:text="${thirdCntRate}" aria-valuenow="82" aria-valuemin="0"
                                                             aria-valuemax="100"></div>
                                                     </div>
                                                 </div>
@@ -562,55 +562,55 @@
                                 </div>
                                 <div class="card-body">
                                     <h4 class="small font-weight-bold">0-9<span
-                                            class="float-right">70</span></h4>
+                                            class="float-right" th:text="${A}"></span></h4>
                                     <div class="progress mb-4">
                                         <div class="progress-bar bg-danger" role="progressbar" style="width: 70%"
                                             aria-valuenow="20" aria-valuemin="0" aria-valuemax="100"></div>
                                     </div>
                                     <h4 class="small font-weight-bold">10-19<span
-                                            class="float-right">70</span></h4>
+                                            class="float-right" th:text="${B}"></span></h4>
                                     <div class="progress mb-4">
                                         <div class="progress-bar bg-danger" role="progressbar" style="width: 70%"
                                              aria-valuenow="20" aria-valuemin="0" aria-valuemax="100"></div>
                                     </div>
                                     <h4 class="small font-weight-bold">20-29<span
-                                            class="float-right">70</span></h4>
+                                            class="float-right" th:text="${C}"></span></h4>
                                     <div class="progress mb-4">
                                         <div class="progress-bar bg-danger" role="progressbar" style="width: 70%"
                                              aria-valuenow="20" aria-valuemin="0" aria-valuemax="100"></div>
                                     </div>
                                     <h4 class="small font-weight-bold">30-39<span
-                                            class="float-right">50</span></h4>
+                                            class="float-right" th:text="${D}"></span></h4>
                                     <div class="progress mb-4">
                                         <div class="progress-bar bg-info" role="progressbar" style="width: 50%"
                                              aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
                                     </div>
                                     <h4 class="small font-weight-bold">40-49<span
-                                            class="float-right">10</span></h4>
+                                            class="float-right" th:text="${E}"></span></h4>
                                     <div class="progress mb-4">
                                         <div class="progress-bar bg-warning" role="progressbar" style="width: 10%"
                                              aria-valuenow="10" aria-valuemin="0" aria-valuemax="100"></div>
                                     </div>
                                     <h4 class="small font-weight-bold">50-59<span
-                                            class="float-right">40</span></h4>
+                                            class="float-right" th:text="${F}"></span></h4>
                                     <div class="progress mb-4">
                                         <div class="progress-bar bg-warning" role="progressbar" style="width: 40%"
                                             aria-valuenow="40" aria-valuemin="0" aria-valuemax="100"></div>
                                     </div>
                                     <h4 class="small font-weight-bold">60-69<span
-                                            class="float-right">60</span></h4>
+                                            class="float-right" th:text="${G}"></span></h4>
                                     <div class="progress mb-4">
                                         <div class="progress-bar" role="progressbar" style="width: 60%"
                                             aria-valuenow="60" aria-valuemin="0" aria-valuemax="100"></div>
                                     </div>
                                     <h4 class="small font-weight-bold">70-79<span
-                                            class="float-right">80</span></h4>
+                                            class="float-right" th:text="${H}"></span></h4>
                                     <div class="progress mb-4">
                                         <div class="progress-bar bg-info" role="progressbar" style="width: 80%"
                                             aria-valuenow="80" aria-valuemin="0" aria-valuemax="100"></div>
                                     </div>
                                     <h4 class="small font-weight-bold">80세 이상<span
-                                            class="float-right">20</span></h4>
+                                            class="float-right" th:text="${I}"></span></h4>
                                     <div class="progress">
                                         <div class="progress-bar bg-success" role="progressbar" style="width: 20%"
                                             aria-valuenow="20" aria-valuemin="0" aria-valuemax="100"></div>

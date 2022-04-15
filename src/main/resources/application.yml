@@ -1,29 +1,25 @@
 server:
-    port: 8080
+  port: 8080
 spring:
-    mvc:
-    view:
-        prefix: /WEB-INF/views/
-        suffix: .jsp
-    security:
-        oauth2:
-            client:
-                registration:
-                    google:
-                        client-id: 710944517798-ldnq50k0mkb77qrsb8erdi0a45rld7cg.apps.googleusercontent.com
-                        client-secret: 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
-                        scope: profile, email
-                    kakao:
-                        client-id: 221e538f782c6f5b3fffb0d2da87f89c
-                        redirect-uri: "{baseUrl}/{action}/oauth2/code/{registrationId}"
-                        # http://localhost:8080/login/oauth2/code/kakao
-                        client-authentication-method: POST
-                        authorization-grant-type: authorization_code
-                        scope: profile_nickname, profile_image, account_email
-                        client-name: Kakao
-                provider:
-                    kakao:
-                        authorization_uri: https://kauth.kakao.com/oauth/authorize
-                        token_uri: https://kauth.kakao.com/oauth/token
-                        user-info-uri: https://kapi.kakao.com/v2/user/me
-                        user_name_attribute: id
+  security:
+    oauth2:
+      client:
+        registration:
+          google:
+            client-id: 710944517798-ldnq50k0mkb77qrsb8erdi0a45rld7cg.apps.googleusercontent.com
+            client-secret: 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
+            scope: profile, email
+          kakao:
+            client-id: 221e538f782c6f5b3fffb0d2da87f89c
+            redirect-uri: "{baseUrl}/{action}/oauth2/code/{registrationId}"
+            # http://localhost:8080/login/oauth2/code/kakao
+            client-authentication-method: POST
+            authorization-grant-type: authorization_code
+            scope: profile_nickname, profile_image, account_email
+            client-name: Kakao
+        provider:
+          kakao:
+            authorization_uri: https://kauth.kakao.com/oauth/authorize
+            token_uri: https://kauth.kakao.com/oauth/token
+            user-info-uri: https://kapi.kakao.com/v2/user/me
+            user_name_attribute: id

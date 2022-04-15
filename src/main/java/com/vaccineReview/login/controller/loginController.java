@@ -6,7 +6,9 @@ import lombok.RequiredArgsConstructor;
 import lombok.Value;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpSession;
 
@@ -39,10 +41,9 @@ public class loginController {
     }
 
     @GetMapping("/layout/login")
-    public String login() {
-
-
+    public String login(Model model) {
+        String test = "dd";
+        model.addAttribute("hi",test);
         return "layout/login";
     }
-
 }
