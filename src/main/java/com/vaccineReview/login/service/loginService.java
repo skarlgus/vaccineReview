@@ -1,6 +1,10 @@
 package com.vaccineReview.login.service;
 
+import com.vaccineReview.login.mapper.loginMapper;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+
+import java.util.Map;
 
 /**
  * 소셜로그인 Service
@@ -17,6 +21,12 @@ import org.springframework.stereotype.Service;
  */
 
 @Service
+@RequiredArgsConstructor
 public class loginService {
 
+    private final loginMapper mapper;
+
+    public Map<String,Object> getUserInfo(int i) {
+        return mapper.getUserInfo(i);
+    }
 }

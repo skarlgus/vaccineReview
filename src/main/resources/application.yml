@@ -1,6 +1,11 @@
 server:
   port: 8080
 spring:
+  datasource:
+    driver-class-name: oracle.jdbc.OracleDriver
+    url: jdbc:oracle:thin:@210.103.215.73:1521:orcl
+    username : KH_VACCINE
+    password : kh_vaccine
   security:
     oauth2:
       client:
