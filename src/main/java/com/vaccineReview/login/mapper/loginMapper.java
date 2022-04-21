@@ -13,6 +13,6 @@ public class loginMapper {
     private final SqlSessionTemplate sqlSessionTemplate;
 
     public Map<String, Object> getUserInfo(int i) {
-        return sqlSessionTemplate.selectOne("userMapper.getUserInfo",i);
+        return sqlSessionTemplate.selectOne("userMapper.getUserInfo");
     }
 }

@@ -14,7 +14,7 @@ public class config {
         SqlSessionFactoryBean sqlSessionFactory = new SqlSessionFactoryBean();
         sqlSessionFactory.setDataSource(datasource);
         //mapper 워치에 따라서 classpath*:static/mappers/**/*Mapper.xml 이부분을 조정
-        sqlSessionFactory.setMapperLocations(new PathMatchingResourcePatternResolver().getResources("classpath:static/mappers/*.xml"));
+        sqlSessionFactory.setMapperLocations(new PathMatchingResourcePatternResolver().getResources("classpath*:static/mappers/**/*Mapper.xml"));
         return sqlSessionFactory.getObject();
     }
     @Bean
