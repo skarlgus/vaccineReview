@@ -1,18 +1,10 @@
 package com.vaccineReview.login.mapper;
 
-import lombok.RequiredArgsConstructor;
-import org.mybatis.spring.SqlSessionTemplate;
-import org.springframework.stereotype.Repository;
-
+import org.apache.ibatis.annotations.Mapper;
 import java.util.Map;
 
-@Repository
-@RequiredArgsConstructor
-public class loginMapper {
+@Mapper
+public interface loginMapper {
 
-    private final SqlSessionTemplate sqlSessionTemplate;
-
-    public Map<String, Object> getUserInfo(int i) {
-        return sqlSessionTemplate.selectOne("userMapper.getUserInfo");
-    }
+    Map<String, Object> getUserInfo(int i);
 }

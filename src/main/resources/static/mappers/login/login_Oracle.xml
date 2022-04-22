@@ -1,8 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="userMapper">
+<mapper namespace="com.vaccineReview.login.mapper.loginMapper">
+
+    <!--
+	작  성  자 : 남기현
+	작  성  일 : 2021.04.22
+	내      용 : MEMBER 테이블 ID 조회
+	-->
     <select id="getUserInfo" resultType="Map">
-        SELECT * FROM t_user
+        SELECT ID
+          FROM MEMBER
     </select>
 
 </mapper>

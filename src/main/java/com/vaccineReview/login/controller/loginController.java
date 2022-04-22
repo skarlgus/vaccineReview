@@ -35,12 +35,6 @@ public class loginController {
 
     private final HttpSession httpSession;
 
-    @GetMapping("/login/oauth2/kakao/callBack")
-    public String kakaoLoginCallBack(String code) {
-        System.out.println("로그인성공");
-        return "redirect:/";
-    }
-
     @GetMapping("/layout/login")
     public String login(Model model) {
 
@@ -48,6 +42,8 @@ public class loginController {
         System.out.println(map.get("ID"));
         String test = "dd";
         model.addAttribute("hi",test);
+        //System.out.println("## : "+httpSession.getAttribute("user"));
+
         return "layout/login";
     }
 }
