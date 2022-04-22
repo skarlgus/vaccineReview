@@ -1,15 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.vaccineReview.login.mapper.loginMapper">
+<mapper namespace="com.vaccineReview.test.mapper.testMapper">
 
     <!--
 	작  성  자 : 남기현
 	작  성  일 : 2021.04.22
 	내      용 : MEMBER 테이블 ID 조회
 	-->
-    <select id="getUserInfo" resultType="Map">
-        SELECT title
-          FROM board
+    <select id="test" resultType="Map">
+        SELECT COUNT(1) as test
+        FROM BOARD
+        WHERE TO_CHAR(regdate,'YYYYMMDD') LIKE TO_CHAR(SYSDATE,'YYYYMMDD')
     </select>
 
 </mapper>

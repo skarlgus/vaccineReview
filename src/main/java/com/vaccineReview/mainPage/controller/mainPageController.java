@@ -6,11 +6,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.text.DecimalFormat;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Set;
+import java.util.Map;
 
 /**
  * 대시보드 Controller
@@ -32,10 +33,17 @@ public class mainPageController {
 
     private final mainPageService service;
 
+    private final HttpSession httpSession;
+
     @GetMapping("/")
     public String main(Model model) throws IOException {
 
         DecimalFormat decFormat = new DecimalFormat("###,###");
+
+        //백신 후기 갯수
+        Map<String,Object> map2 = service.getReviewBoard(1);
+        //mainPageVO mainPageVO = service.getReviewBoard();
+        //System.out.println("@@@@@@@@@@@@@"+mainPageVO.getBoardCount());
 
         //코로나19 감염 현황 API
         HashMap<String, Integer> coronaNowMap = service.coronaNow();
@@ -65,7 +73,11 @@ public class mainPageController {
         //코로나19 백신 누적 API
         HashMap<String, Integer> coronaVaccineNowMap = service.coronaVaccineNow();
         model.addAttribute("thirdCntRate",coronaVaccineNowMap.get("thirdCntRate")+"%");  //3차 접종률
-        
+
+        //세션 값
+        model.addAttribute("userName",httpSession.getAttribute("userName"));  //사용자명
+        model.addAttribute("userMail",httpSession.getAttribute("userMail"));  //사용자메일
+
         return "index";
     };
 

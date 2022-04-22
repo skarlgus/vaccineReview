@@ -4,9 +4,8 @@ import lombok.Getter;
 import lombok.Setter;
 
 @Getter
-@Setter
 public class mainPageVO {
 
-    private int testNum;
+    private int boardCount;
 
 }

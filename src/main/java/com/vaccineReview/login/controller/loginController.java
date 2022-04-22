@@ -38,12 +38,9 @@ public class loginController {
     @GetMapping("/layout/login")
     public String login(Model model) {
 
+        //TDD
         Map<String,Object> map = service.getUserInfo(1);
-        System.out.println(map.get("ID"));
-        String test = "dd";
-        model.addAttribute("hi",test);
-        //System.out.println("## : "+httpSession.getAttribute("user"));
-
+        System.out.println(map.get("title"));
         return "layout/login";
     }
 }

@@ -1,11 +1,13 @@
 package com.vaccineReview.mainPage.service;
 
 import com.vaccineReview.mainPage.mapper.mainPageMapper;
+import com.vaccineReview.mainPage.vo.mainPageVO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.json.XML;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.io.InputStreamReader;
@@ -15,10 +17,7 @@ import java.net.URLEncoder;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 
 /**
  * 대시보드 Service
@@ -43,6 +42,13 @@ public class mainPageService {
      *   note : mainPage MAPPER class inject.
      * ************************************************/
     private final mainPageMapper mapper;
+
+    /**************************************************
+     *   note : 금일 후기 작성갯수
+     * ************************************************/
+    public Map<String, Object> getReviewBoard(int i) {
+        return mapper.getReviewBoard(i);
+    }
 
     /**************************************************
      *   note : 코로나19 감염 현황 API
@@ -302,4 +308,5 @@ public class mainPageService {
 
         return map;
     }
+
 }

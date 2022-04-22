@@ -1,6 +1,12 @@
 package com.vaccineReview.mainPage.mapper;
 
+import lombok.RequiredArgsConstructor;
+import org.apache.ibatis.annotations.Mapper;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.stereotype.Repository;
+
+import javax.servlet.http.HttpSession;
+import java.util.Map;
 
 /**
  * 대시보드 Mapper
@@ -19,7 +25,8 @@ import org.springframework.stereotype.Repository;
 @Repository
 public class mainPageMapper {
 
-    public void corona() {
 
+    public Map<String, Object> getReviewBoard(int i) {
+        return null;
     }
 }

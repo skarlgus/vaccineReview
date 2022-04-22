@@ -5,7 +5,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-@MapperScan(value={"com.vaccineReview.login.mapper"})
+@MapperScan(value={"com.vaccineReview.*.mapper"})
 public class VaccineReviewApplication {
 
 	public static void main(String[] args) {
