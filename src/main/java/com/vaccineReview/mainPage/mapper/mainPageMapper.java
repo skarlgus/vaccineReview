@@ -1,5 +1,6 @@
 package com.vaccineReview.mainPage.mapper;
 
+import com.vaccineReview.mainPage.vo.mainPageVO;
 import lombok.RequiredArgsConstructor;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.context.annotation.Configuration;
@@ -22,11 +23,8 @@ import java.util.Map;
  *
  */
 
-@Repository
-public class mainPageMapper {
+@Mapper
+public interface mainPageMapper {
 
-
-    public Map<String, Object> getReviewBoard(int i) {
-        return null;
-    }
+    mainPageVO getReviewBoard();
 }

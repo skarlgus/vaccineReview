@@ -4,12 +4,34 @@
 
     <!--
 	작  성  자 : 남기현
-	작  성  일 : 2021.04.22
-	내      용 : MEMBER 테이블 ID 조회
+	작  성  일 : 2021.04.24
+	내      용 : 로그인
 	-->
-    <select id="getUserInfo" resultType="Map">
-        SELECT title
-          FROM board
+    <select id="getUserAccount" resultType="com.vaccineReview.login.vo.loginVO">
+        SELECT user_No as userNo
+             , user_Id as userId
+             , user_Pw as userPw
+             , user_Name as userName
+             , user_Auth as userAuth
+          FROM memberTest
+         WHERE USER_ID = #{userId}
     </select>
+
+    <!--
+	작  성  자 : 남기현
+	작  성  일 : 2021.04.24
+	내      용 : 회원가입
+	-->
+    <insert id="saveUser" parameterType="com.vaccineReview.login.vo.loginVO">
+        INSERT INTO memberTest (
+                    USER_ID
+                  , USER_PW
+                  , USER_NAME
+           ) VALUES (
+                    #{userId}
+                  , #{userPw}
+                  , #{userName}
+                  )
+    </insert>
 
 </mapper>

@@ -31,7 +31,7 @@
         <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
             <!-- Sidebar - Brand -->
-            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
+            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="/">
                 <div class="sidebar-brand-icon rotate-n-15">
                     <i class="fas fa-laugh-wink"></i>
                 </div>
@@ -43,7 +43,7 @@
 
             <!-- Nav Item - Dashboard -->
             <li class="nav-item active">
-                <a class="nav-link" href="index.html">
+                <a class="nav-link" href="/">
                     <i class="fas fa-fw fa-tachometer-alt"></i>
                     <span>메인 페이지</span></a>
             </li>
@@ -207,15 +207,15 @@
                             </div>
                         </li>
 
-                        <!-- Nav Item - Alerts -->
+                        <!-- Nav Item - Alerts
                         <li class="nav-item dropdown no-arrow mx-1">
                             <a class="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button"
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <i class="fas fa-bell fa-fw"></i>
-                                <!-- Counter - Alerts -->
+                                <i class="fas fa-bell fa-fw"></i>-->
+                                <!-- Counter - Alerts
                                 <span class="badge badge-danger badge-counter">3+</span>
-                            </a>
-                            <!-- Dropdown - Alerts -->
+                            </a>-->
+                            <!-- Dropdown - Alerts
                             <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in"
                                 aria-labelledby="alertsDropdown">
                                 <h6 class="dropdown-header">
@@ -257,6 +257,7 @@
                                 <a class="dropdown-item text-center small text-gray-500" href="#">Show All Alerts</a>
                             </div>
                         </li>
+                        -->
 
                         <!-- Nav Item - Messages -->
                         <li class="nav-item dropdown no-arrow mx-1">
@@ -264,7 +265,7 @@
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <i class="fas fa-envelope fa-fw"></i>
                                 <!-- Counter - Messages -->
-                                <span class="badge badge-danger badge-counter">7</span>
+                                <span class="badge badge-danger badge-counter">0</span>
                             </a>
                             <!-- Dropdown - Messages -->
                             <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in"
@@ -323,6 +324,7 @@
                                 <a class="dropdown-item text-center small text-gray-500" href="#">Read More Messages</a>
                             </div>
                         </li>
+                        <P style="margin-top: 23px; font-size: 14px;" th:text="${userMail}"></P>
 
                         <div class="topbar-divider d-none d-sm-block"></div>
 
@@ -332,7 +334,7 @@
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <span class="mr-2 d-none d-lg-inline text-gray-600 small" th:text="${userName}"></span>
                                 <img class="img-profile rounded-circle"
-                                    src="/bootstrap/img/undraw_profile.svg">
+                                    th:src="${userPicture}">
                             </a>
                             <!-- Dropdown - User Information -->
                             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
@@ -367,9 +369,8 @@
 
                     <!-- Page Heading-->
                     <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                        <h1 class="h3 mb-0 text-gray-800">Dashboard</h1>
-                        <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
-                                class="fas fa-download fa-sm text-white-50"></i> 백신 후기 바로가기</a>
+                        <h1 class="h3 mb-0 text-gray-800">실시간 코로나19</h1>
+                        <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"> 백신 후기 바로가기</a>
                     </div>
 
 
@@ -424,12 +425,12 @@
                                             </div>
                                             <div class="row no-gutters align-items-center">
                                                 <div class="col-auto">
-                                                    <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800"><p th:text="${thirdCntRate}"/></div>
+                                                    <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800"><p th:text="${thirdCntRate}+'%'"/></div>
                                                 </div>
                                                 <div class="col">
                                                     <div class="progress progress-sm mr-2">
                                                         <div class="progress-bar bg-info" role="progressbar"
-                                                             style th:text="${thirdCntRate}" aria-valuenow="82" aria-valuemin="0"
+                                                             th:style="${'width: '+thirdCntRate+'%'}"  aria-valuenow="82" aria-valuemin="0"
                                                             aria-valuemax="100"></div>
                                                     </div>
                                                 </div>
@@ -451,7 +452,7 @@
                                         <div class="col mr-2">
                                             <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
                                                 today 백신 후기</div>
-                                            <div class="h5 mb-0 font-weight-bold text-gray-800">12건</div>
+                                            <div class="h5 mb-0 font-weight-bold text-gray-800"><p th:text="${boardCount}"/></div>
                                         </div>
                                         <div class="col-auto">
                                             <i class="fas fa-comments fa-2x text-gray-300"></i>
@@ -561,58 +562,58 @@
                                     <h6 class="m-0 font-weight-bold text-primary">연렬대별 확진률</h6>
                                 </div>
                                 <div class="card-body">
-                                    <h4 class="small font-weight-bold">0-9<span
-                                            class="float-right" th:text="${A}"></span></h4>
+                                    <h4 class="small font-weight-bold">0-9세<span
+                                            class="float-right" th:text="${A}+'%'"></span></h4>
                                     <div class="progress mb-4">
-                                        <div class="progress-bar bg-danger" role="progressbar" style="width: 70%"
+                                        <div class="progress-bar bg-danger" role="progressbar" th:style="${'width: '+A+'%'}"
                                             aria-valuenow="20" aria-valuemin="0" aria-valuemax="100"></div>
                                     </div>
-                                    <h4 class="small font-weight-bold">10-19<span
-                                            class="float-right" th:text="${B}"></span></h4>
+                                    <h4 class="small font-weight-bold">10-19세<span
+                                            class="float-right" th:text="${B}+'%'"></span></h4>
                                     <div class="progress mb-4">
-                                        <div class="progress-bar bg-danger" role="progressbar" style="width: 70%"
+                                        <div class="progress-bar" role="progressbar" th:style="${'width: '+B+'%; background-color:orange;' }"
                                              aria-valuenow="20" aria-valuemin="0" aria-valuemax="100"></div>
                                     </div>
-                                    <h4 class="small font-weight-bold">20-29<span
-                                            class="float-right" th:text="${C}"></span></h4>
+                                    <h4 class="small font-weight-bold">20-29세<span
+                                            class="float-right" th:text="${C}+'%'"></span></h4>
                                     <div class="progress mb-4">
-                                        <div class="progress-bar bg-danger" role="progressbar" style="width: 70%"
+                                        <div class="progress-bar bg-warning" role="progressbar" th:style="${'width: '+C+'%'}"
                                              aria-valuenow="20" aria-valuemin="0" aria-valuemax="100"></div>
                                     </div>
-                                    <h4 class="small font-weight-bold">30-39<span
-                                            class="float-right" th:text="${D}"></span></h4>
+                                    <h4 class="small font-weight-bold">30-39세<span
+                                            class="float-right" th:text="${D}+'%'"></span></h4>
                                     <div class="progress mb-4">
-                                        <div class="progress-bar bg-info" role="progressbar" style="width: 50%"
+                                        <div class="progress-bar" role="progressbar" th:style="${'width: '+D+'%; background-color:green;'}"
                                              aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
                                     </div>
-                                    <h4 class="small font-weight-bold">40-49<span
-                                            class="float-right" th:text="${E}"></span></h4>
+                                    <h4 class="small font-weight-bold">40-49세<span
+                                            class="float-right" th:text="${E}+'%'"></span></h4>
                                     <div class="progress mb-4">
-                                        <div class="progress-bar bg-warning" role="progressbar" style="width: 10%"
+                                        <div class="progress-bar bg-info" role="progressbar" th:style="${'width: '+E+'%'}"
                                              aria-valuenow="10" aria-valuemin="0" aria-valuemax="100"></div>
                                     </div>
-                                    <h4 class="small font-weight-bold">50-59<span
-                                            class="float-right" th:text="${F}"></span></h4>
+                                    <h4 class="small font-weight-bold">50-59세<span
+                                            class="float-right" th:text="${F}+'%'"></span></h4>
                                     <div class="progress mb-4">
-                                        <div class="progress-bar bg-warning" role="progressbar" style="width: 40%"
+                                        <div class="progress-bar" role="progressbar" th:style="${'width: '+F+'%; background-color:purple;'}"
                                             aria-valuenow="40" aria-valuemin="0" aria-valuemax="100"></div>
                                     </div>
-                                    <h4 class="small font-weight-bold">60-69<span
-                                            class="float-right" th:text="${G}"></span></h4>
+                                    <h4 class="small font-weight-bold">60-69세<span
+                                            class="float-right" th:text="${G}+'%'"></span></h4>
                                     <div class="progress mb-4">
-                                        <div class="progress-bar" role="progressbar" style="width: 60%"
+                                        <div class="progress-bar" role="progressbar" th:style="${'width: '+G+'%'}"
                                             aria-valuenow="60" aria-valuemin="0" aria-valuemax="100"></div>
                                     </div>
-                                    <h4 class="small font-weight-bold">70-79<span
-                                            class="float-right" th:text="${H}"></span></h4>
+                                    <h4 class="small font-weight-bold">70-79세<span
+                                            class="float-right" th:text="${H}+'%'"></span></h4>
                                     <div class="progress mb-4">
-                                        <div class="progress-bar bg-info" role="progressbar" style="width: 80%"
+                                        <div class="progress-bar bg-info" role="progressbar" th:style="${'width: '+H+'%'}"
                                             aria-valuenow="80" aria-valuemin="0" aria-valuemax="100"></div>
                                     </div>
                                     <h4 class="small font-weight-bold">80세 이상<span
-                                            class="float-right" th:text="${I}"></span></h4>
+                                            class="float-right" th:text="${I}+'%'"></span></h4>
                                     <div class="progress">
-                                        <div class="progress-bar bg-success" role="progressbar" style="width: 20%"
+                                        <div class="progress-bar bg-success" role="progressbar" th:style="${'width: '+I+'%'}"
                                             aria-valuenow="20" aria-valuemin="0" aria-valuemax="100"></div>
                                     </div>
                                 </div>
@@ -740,7 +741,8 @@
             <footer class="sticky-footer bg-white">
                 <div class="container my-auto">
                     <div class="copyright text-center my-auto">
-                        <span>Copyright &copy; Your Website 2021</span>
+                        <span>본 사이트의 콘텐츠는 저작권법의 보호를 받는바, 무단 전재, 복사, 배포 등을 금합니다<br>
+                            Copyright &copy; VaccineReview Website 2022. All Rights Reserved.</span>
                     </div>
                 </div>
             </footer>
@@ -763,12 +765,12 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">로그아웃</h5>
                     <button class="close" type="button" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">×</span>
                     </button>
                 </div>
-                <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+                <div class="modal-body">로그아웃시 작성중이던 게시글 혹은 진행중이던 작업이 취소됩니다. 로그아웃 하시겠습니까?</div>
                 <div class="modal-footer">
                     <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
                     <a class="btn btn-primary" href="/logout">Logout</a>

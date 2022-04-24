@@ -4,8 +4,10 @@ import lombok.Getter;
 import lombok.Setter;
 
 @Getter
+@Setter
 public class mainPageVO {
 
-    private int boardCount;
+    //게시판 리뷰 작성 수
+    private String boardCount;
 
 }

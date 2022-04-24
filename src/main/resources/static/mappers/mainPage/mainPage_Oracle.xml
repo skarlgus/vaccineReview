@@ -7,10 +7,10 @@
 	작  성  일 : 2021.04.22
 	내      용 : MEMBER 테이블 ID 조회
 	-->
-    <select id="test" resultType="Map">
-        SELECT COUNT(1)
+    <select id="getReviewBoard" resultType="com.vaccineReview.mainPage.vo.mainPageVO">
+        SELECT COUNT(1) || '건' AS boardCount
         FROM BOARD
-        WHERE TO_CHAR(regdate,'YYYYMMDD') LIKE TO_CHAR(SYSDATE,'YYYYMMDD')+1
+        WHERE TO_CHAR(regdate,'YYYYMMDD') LIKE TO_CHAR(SYSDATE,'YYYYMMDD')
     </select>
 
 </mapper>

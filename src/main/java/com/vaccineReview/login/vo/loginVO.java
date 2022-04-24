@@ -1,67 +1,64 @@
 package com.vaccineReview.login.vo;
 
-import lombok.Builder;
-import lombok.Getter;
+import lombok.Data;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
-import java.util.Map;
+import java.util.Collection;
+import java.util.Collections;
 
-@Getter
-public class loginVO {
+@Data
+//@Getter, @Setter, @RequiredArgsConstructor, @ToString, @EqualsAndHashCode 어노테이션을 한꺼번에 설정해주는 어노테이션
+public class loginVO implements UserDetails {
 
-    private Map<String, Object> attributes; // OAuth2 반환하는 유저 정보 Map
-    private String nameAttributeKey;
-    private String name;
-    private String email;
-    private String picture;
+    private int userNo;
+    private String userId;
+    private String userPw;
+    private String userName;
+    private String userAuth;
+    private String appendDate;
+    private String updateDate;
 
-    @Builder
-    public loginVO(Map<String, Object> attributes, String nameAttributeKey, String name, String email, String picture) {
-        this.attributes = attributes;
-        this.nameAttributeKey = nameAttributeKey;
-        this.name = name;
-        this.email = email;
-        this.picture = picture;
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return Collections.singletonList(new SimpleGrantedAuthority(this.userAuth));
     }
 
-    public static loginVO of(String registrationId, String userNameAttributeName, Map<String, Object> attributes){
-        //(new!) kakao
-        //if("kakao".equals(registrationId)){
-            return ofKakao("id", attributes);
-        //}
-        // naver
-        /*
-        if("naver".equals(registrationId)){
-            return ofNaver("id", attributes);
-        }
-        // google
-        return ofGoogle(userNameAttributeName, attributes);
-        */
+    @Override
+    public String getPassword() {
+        return this.userPw;
     }
 
-    private static loginVO ofKakao(String userNameAttributeName, Map<String, Object> attributes) {
-        // kakao는 kakao_account에 유저정보가 있다. (email)
-        Map<String, Object> kakaoAccount = (Map<String, Object>)attributes.get("kakao_account");
-        // kakao_account안에 또 profile이라는 JSON객체가 있다. (nickname, profile_image)
-        Map<String, Object> kakaoProfile = (Map<String, Object>)kakaoAccount.get("profile");
-
-        return loginVO.builder()
-                .name((String) kakaoProfile.get("nickname"))
-                .email((String) kakaoAccount.get("email"))
-                .picture((String) kakaoProfile.get("profile_image_url"))
-                .attributes(attributes)
-                .nameAttributeKey(userNameAttributeName)
-                .build();
+    // 시큐리티의 userName
+    // -> 따라서 얘는 인증할 때 id를 봄
+    @Override
+    public String getUsername() {
+        return this.userId;
     }
-    /*
-    public User toEntity(){
-        return User.builder()
-                .name(name)
-                .email(email)
-                .picture(picture)
-                .role(Role.GUEST) // 기본 권한 GUEST
-                .build();
+
+    // Vo의 userName !
+    public String getUserName(){
+        return this.userName;
     }
-    */
 
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
 
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return true;
+    }
 }

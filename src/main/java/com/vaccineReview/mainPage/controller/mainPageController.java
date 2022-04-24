@@ -1,6 +1,7 @@
 package com.vaccineReview.mainPage.controller;
 
 import com.vaccineReview.mainPage.service.mainPageService;
+import com.vaccineReview.mainPage.vo.mainPageVO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -41,9 +42,8 @@ public class mainPageController {
         DecimalFormat decFormat = new DecimalFormat("###,###");
 
         //백신 후기 갯수
-        Map<String,Object> map2 = service.getReviewBoard(1);
-        //mainPageVO mainPageVO = service.getReviewBoard();
-        //System.out.println("@@@@@@@@@@@@@"+mainPageVO.getBoardCount());
+        mainPageVO mainPageVO = service.getReviewBoard();
+        model.addAttribute("boardCount",mainPageVO.getBoardCount());  //금일 후기 갯수
 
         //코로나19 감염 현황 API
         HashMap<String, Integer> coronaNowMap = service.coronaNow();
@@ -53,15 +53,15 @@ public class mainPageController {
         //코로나19 연령별·성별감염 감염 현황 현황 API
         List<HashMap<String, Object>> coronaVaccineMap = service.coronaVaccine();
         HashMap map = (HashMap<String, Object>) coronaVaccineMap.get(0);
-        model.addAttribute("A", map.get("0-9")+"%");
-        model.addAttribute("B", map.get("10-19")+"%");
-        model.addAttribute("C", map.get("20-29")+"%");
-        model.addAttribute("D", map.get("30-39")+"%");
-        model.addAttribute("E", map.get("40-49")+"%");
-        model.addAttribute("F", map.get("50-59")+"%");
-        model.addAttribute("G", map.get("60-69")+"%");
-        model.addAttribute("H", map.get("70-79")+"%");
-        model.addAttribute("I", map.get("80 이상")+"%");
+        model.addAttribute("A", map.get("0-9"));
+        model.addAttribute("B", map.get("10-19"));
+        model.addAttribute("C", map.get("20-29"));
+        model.addAttribute("D", map.get("30-39"));
+        model.addAttribute("E", map.get("40-49"));
+        model.addAttribute("F", map.get("50-59"));
+        model.addAttribute("G", map.get("60-69"));
+        model.addAttribute("H", map.get("70-79"));
+        model.addAttribute("I", map.get("80 이상"));
 
         /*
         Set<String> keySet = map.keySet();
@@ -72,11 +72,12 @@ public class mainPageController {
 
         //코로나19 백신 누적 API
         HashMap<String, Integer> coronaVaccineNowMap = service.coronaVaccineNow();
-        model.addAttribute("thirdCntRate",coronaVaccineNowMap.get("thirdCntRate")+"%");  //3차 접종률
+        model.addAttribute("thirdCntRate",coronaVaccineNowMap.get("thirdCntRate"));  //3차 접종률
 
         //세션 값
         model.addAttribute("userName",httpSession.getAttribute("userName"));  //사용자명
         model.addAttribute("userMail",httpSession.getAttribute("userMail"));  //사용자메일
+        model.addAttribute("userPicture",httpSession.getAttribute("userPicture"));  //사용자프로필
 
         return "index";
     };

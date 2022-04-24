@@ -1,9 +1,19 @@
 package com.vaccineReview.login.service;
 
 import com.vaccineReview.login.mapper.loginMapper;
+import com.vaccineReview.login.vo.loginVO;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.RequestParam;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Map;
 
 /**
@@ -22,11 +32,37 @@ import java.util.Map;
 
 @Service
 @RequiredArgsConstructor
-public class loginService {
+public class loginService implements UserDetailsService {
+
+    SimpleDateFormat format = new SimpleDateFormat ( "yyyy-MM-dd HH:mm:sss");
+    Date time = new Date();
+    String localTime = format.format(time);
 
     private final loginMapper mapper;
 
-    public Map<String,Object> getUserInfo(int i) {
-        return mapper.getUserInfo(i);
+    @Transactional
+    //트랜잭션 보장이 된 메소드로 설정 해준다.
+    public void joinUser(loginVO loginVO){
+        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+        loginVO.setUserPw(passwordEncoder.encode(loginVO.getPassword()));
+        loginVO.setUserAuth("USER");
+        loginVO.setAppendDate(localTime);
+        loginVO.setUpdateDate(localTime);
+        mapper.saveUser(loginVO);
     }
+
+    @Override
+    public loginVO loadUserByUsername(String userId) throws UsernameNotFoundException {
+        //여기서 받은 유저 패스워드와 비교하여 로그인 인증
+        loginVO loginVO = mapper.getUserAccount(userId);
+        if (loginVO == null){
+            System.out.println("정보없음");
+            throw new UsernameNotFoundException("User not authorized.");
+        }else{
+            System.out.println("정보있음");
+        }
+        return loginVO;
+    }
+
+
 }

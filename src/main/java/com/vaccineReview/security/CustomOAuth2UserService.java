@@ -1,7 +1,5 @@
 package com.vaccineReview.security;
 
-import com.vaccineReview.security.OAuthAttributes;
-import com.vaccineReview.security.SessionUser;
 import com.vaccineReview.domain.User;
 import com.vaccineReview.domain.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -49,6 +47,7 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
         httpSession.setAttribute("userSession", new SessionUser(user));
         httpSession.setAttribute("userMail", user.getEmail());
         httpSession.setAttribute("userName", user.getName());
+        httpSession.setAttribute("userPicture", user.getPicture());
 
         // 로그인한 유저를 리턴함
         return new DefaultOAuth2User(

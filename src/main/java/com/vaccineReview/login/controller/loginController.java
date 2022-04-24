@@ -1,6 +1,7 @@
 package com.vaccineReview.login.controller;
 
 import com.vaccineReview.login.service.loginService;
+import com.vaccineReview.login.vo.loginVO;
 import com.vaccineReview.security.SessionUser;
 import lombok.RequiredArgsConstructor;
 import lombok.Value;
@@ -8,6 +9,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpSession;
@@ -35,12 +37,25 @@ public class loginController {
 
     private final HttpSession httpSession;
 
+    //로그인 뷰
     @GetMapping("/layout/login")
-    public String login(Model model) {
-
-        //TDD
-        Map<String,Object> map = service.getUserInfo(1);
-        System.out.println(map.get("title"));
+    public String login() {
         return "layout/login";
     }
+
+
+
+    //회원가입 뷰
+    @GetMapping("/login/register")
+    public String register() {
+        return "layout/register";
+    }
+    
+    //회원가입 로직
+    @PostMapping("/login/register")
+    public String registerUser(loginVO loginVO) {
+        service.joinUser(loginVO);
+        return "redirect:/layout/login";
+    }
+
 }

@@ -46,8 +46,8 @@ public class mainPageService {
     /**************************************************
      *   note : 금일 후기 작성갯수
      * ************************************************/
-    public Map<String, Object> getReviewBoard(int i) {
-        return mapper.getReviewBoard(i);
+    public mainPageVO getReviewBoard() {
+        return mapper.getReviewBoard();
     }
 
     /**************************************************
