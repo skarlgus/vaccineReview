@@ -1,9 +1,15 @@
 server:
   port: 8080
 spring:
+  jpa:
+    hibernate:
+      ddl-auto: update #절대 바꾸지말기
+    show-sql: true
+  thymeleaf:
+    cache: false
   datasource:
     driver-class-name: oracle.jdbc.OracleDriver
-    url: jdbc:oracle:thin:@192.168.0.7:1521:orcl
+    url: jdbc:oracle:thin:@210.103.215.73:1521:orcl
     username : KH_VACCINE
     password : kh_vaccine
   security:

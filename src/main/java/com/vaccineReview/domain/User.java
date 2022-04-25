@@ -1,15 +1,13 @@
 package com.vaccineReview.domain;
 
-import lombok.AccessLevel;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED) // 외부에서의 생성을 열어 둘 필요가 없을 때 보안적으로 권장된다.
 @Entity
+@Setter
 @Table(name = "MEMBER")
 public class User{
 
@@ -25,6 +23,9 @@ public class User{
 
     @Column
     private String picture;
+
+    @Column
+    private String password;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)

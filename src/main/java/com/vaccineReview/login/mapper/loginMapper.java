@@ -12,6 +12,10 @@ public interface loginMapper {
     //로그인
     loginVO getUserAccount(String userID);
 
+    //회원가입 중복 체크
+    int checkUser(loginVO loginVO);
+
     //회원가입
     void saveUser(loginVO loginVO);
+
 }

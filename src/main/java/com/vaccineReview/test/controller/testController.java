@@ -24,8 +24,6 @@ public class testController {
         System.out.println("map = " + map);
         System.out.println("map = " + map.size());
 
-        List<User> user =  userRepository.findAllByEmail("rlgus0419@gmail.com");
-        System.out.println("user.size() = " + user.size());
 
 
 

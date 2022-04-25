@@ -3,6 +3,7 @@ package com.vaccineReview.security;
 import com.vaccineReview.domain.User;
 import com.vaccineReview.domain.UserRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.log4j.Log4j;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;
 import org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest;
@@ -14,9 +15,11 @@ import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpSession;
 import java.util.Collections;
+import java.util.Optional;
 
 @RequiredArgsConstructor
 @Service
+
 public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequest, OAuth2User> {
 
     private final UserRepository userRepository;
@@ -61,8 +64,23 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
         User user = userRepository.findByEmail(attributes.getEmail())
                 .map(entity -> entity.update(attributes.getName(), attributes.getPicture()))
                 .orElse(attributes.toEntity());
-
         return userRepository.save(user);
+        /*User user2 = userRepository.findAllByEmail(attributes.getEmail());
+        Optional<User> OptUser = userRepository.findByEmail(attributes.getEmail());
+        if (OptUser.isPresent()) {
+            User user = OptUser.get();
+            user.setName(attributes.getName());
+            user.setPicture(attributes.getPicture());
+            return userRepository.save(user);
+        }else{
+            User user = new User();
+            user.setName(attributes.getName());
+            user.setEmail(attributes.getEmail());
+            user.setPicture(attributes.getPicture());
+            user.setRole(attributes.toEntity().getRole());
+            return userRepository.save(user);
+        }*/
+
     }
 
 }

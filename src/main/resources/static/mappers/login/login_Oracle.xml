@@ -8,13 +8,24 @@
 	내      용 : 로그인
 	-->
     <select id="getUserAccount" resultType="com.vaccineReview.login.vo.loginVO">
-        SELECT user_No as userNo
-             , user_Id as userId
-             , user_Pw as userPw
-             , user_Name as userName
-             , user_Auth as userAuth
-          FROM memberTest
-         WHERE USER_ID = #{userId}
+        SELECT EMAIL as userId
+             , PASSWORD as userPw
+             , NAME as userLastName
+             , ROLE as userAuth
+          FROM MEMBER
+         WHERE EMAIL = #{userId}
+    </select>
+
+    <!--
+	작  성  자 : 남기현
+	작  성  일 : 2021.04.25
+	내      용 : 회원가입 중복체크
+	-->
+    <select id="checkUser" resultType="Int">
+        SELECT COUNT(1)
+          FROM MEMBER
+         WHERE EMAIL = #{userId}
+           AND ROLE = '회원가입'
     </select>
 
     <!--
@@ -23,14 +34,16 @@
 	내      용 : 회원가입
 	-->
     <insert id="saveUser" parameterType="com.vaccineReview.login.vo.loginVO">
-        INSERT INTO memberTest (
-                    USER_ID
-                  , USER_PW
-                  , USER_NAME
+        INSERT INTO MEMBER (
+                    EMAIL
+                  , NAME
+                  , PASSWORD
+                  , ROLE
            ) VALUES (
                     #{userId}
+                  , #{userFirstName} || #{userLastName}
                   , #{userPw}
-                  , #{userName}
+                  , #{userAuth}
                   )
     </insert>
 

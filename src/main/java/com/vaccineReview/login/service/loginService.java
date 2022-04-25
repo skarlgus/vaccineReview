@@ -40,29 +40,39 @@ public class loginService implements UserDetailsService {
 
     private final loginMapper mapper;
 
+    /**************************************************
+     *   note : 중복가입 체크
+     * ************************************************/
+    public int checkUser(loginVO loginVO) {
+        return mapper.checkUser(loginVO);
+    }
+
+    /**************************************************
+     *   note : 회원가입
+     * ************************************************/
     @Transactional
     //트랜잭션 보장이 된 메소드로 설정 해준다.
     public void joinUser(loginVO loginVO){
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         loginVO.setUserPw(passwordEncoder.encode(loginVO.getPassword()));
-        loginVO.setUserAuth("USER");
+        loginVO.setUserAuth("회원가입");
         loginVO.setAppendDate(localTime);
         loginVO.setUpdateDate(localTime);
+
         mapper.saveUser(loginVO);
     }
 
+    /**************************************************
+     *   note : 로그인 인증
+     * ************************************************/
     @Override
     public loginVO loadUserByUsername(String userId) throws UsernameNotFoundException {
         //여기서 받은 유저 패스워드와 비교하여 로그인 인증
         loginVO loginVO = mapper.getUserAccount(userId);
         if (loginVO == null){
-            System.out.println("정보없음");
             throw new UsernameNotFoundException("User not authorized.");
-        }else{
-            System.out.println("정보있음");
         }
         return loginVO;
     }
-
 
 }

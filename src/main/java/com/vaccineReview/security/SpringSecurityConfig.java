@@ -24,6 +24,8 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
 
     private final loginService loginService;
 
+    //private  final customSuccessHandler customSuccessHandler;
+
     /*
      *  스프링 시큐리티 앞단 설정
      * */
@@ -31,7 +33,7 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
     public void configure(WebSecurity web) throws Exception {
         web
                 .ignoring()
-                .antMatchers("/bootstrap/**");   //bootstrap 권한 해제
+                .antMatchers("/bootstrap/**","/templates/**","/static/**");   //bootstrap 권한 해제
     }
 
     /*
@@ -53,6 +55,7 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
                 .loginPage("/layout/login")
                 .loginProcessingUrl("/login_proc")
                 .defaultSuccessUrl("/",true).permitAll()
+                .successHandler(new customSuccessHandler()).permitAll()	// 성공시 수행할 핸들러
                 .and()
                 .logout()
                 .logoutUrl("/logout") /* 로그아웃 url*/

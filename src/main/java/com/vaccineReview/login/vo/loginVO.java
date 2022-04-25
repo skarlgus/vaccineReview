@@ -15,7 +15,9 @@ public class loginVO implements UserDetails {
     private int userNo;
     private String userId;
     private String userPw;
-    private String userName;
+    private String userPwChk;
+    private String userFirstName;
+    private String userLastName;
     private String userAuth;
     private String appendDate;
     private String updateDate;
@@ -30,6 +32,10 @@ public class loginVO implements UserDetails {
         return this.userPw;
     }
 
+    public String getPasswordChk() {
+        return this.userPwChk;
+    }
+
     // 시큐리티의 userName
     // -> 따라서 얘는 인증할 때 id를 봄
     @Override
@@ -38,8 +44,12 @@ public class loginVO implements UserDetails {
     }
 
     // Vo의 userName !
-    public String getUserName(){
-        return this.userName;
+    public String getUserFirstName(){
+        return this.userFirstName;
+    }
+
+    public String getUserLastName(){
+        return this.userLastName;
     }
 
     @Override

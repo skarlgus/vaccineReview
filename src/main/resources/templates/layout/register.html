@@ -30,7 +30,8 @@
             <div class="card-body p-0">
                 <!-- Nested Row within Card Body -->
                 <div class="row">
-                    <div class="col-lg-5 d-none d-lg-block bg-register-image"></div>
+                    <!--<div class="col-lg-5 d-none d-lg-block bg-register-image"></div>-->
+                    <div class="col-lg-5 d-none d-lg-block "></div>
                     <div class="col-lg-7">
                         <div class="p-5">
                             <div class="text-center">
@@ -39,26 +40,26 @@
                             <form class="user" action="/login/register" method="post">
                                 <div class="form-group row">
                                     <div class="col-sm-6 mb-3 mb-sm-0">
-                                        <input type="text" class="form-control form-control-user" id="exampleFirstName"
-                                            placeholder="First Name">
+                                        <input type="text" class="form-control form-control-user" id="exampleFirstName" name="userFirstName"
+                                               placeholder="First Name" th:value="${#strings.defaultString(loginVO?.userFirstName, '')}">
                                     </div>
                                     <div class="col-sm-6">
-                                        <input type="text" class="form-control form-control-user" id="exampleLastName" name="userName"
-                                            placeholder="Last Name">
+                                        <input type="text" class="form-control form-control-user" id="exampleLastName" name="userLastName"
+                                               placeholder="Last Name" th:value="${#strings.defaultString(loginVO?.userFirstName, '')}">
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <input type="email" class="form-control form-control-user" id="exampleInputEmail" name="userId"
-                                        placeholder="Email Address">
+                                        th:placeholder="${#strings.defaultString(emailInfo, 'Email Address')}" th:value="${#strings.defaultString(loginVO?.userId, '')}">
                                 </div>
                                 <div class="form-group row">
                                     <div class="col-sm-6 mb-3 mb-sm-0">
-                                        <input type="password" class="form-control form-control-user"
-                                            id="exampleInputPassword" placeholder="Password">
+                                        <input type="password" class="form-control form-control-user" placeholder="Password"
+                                            id="exampleInputPassword" name="userPw" th:value="${#strings.defaultString(loginVO?.password, '')}">
                                     </div>
                                     <div class="col-sm-6">
-                                        <input type="password" class="form-control form-control-user"
-                                            id="exampleRepeatPassword" placeholder="Repeat Password" name="userPw">
+                                        <input type="password" class="form-control form-control-user" th:placeholder="${#strings.defaultString(pwInfo, 'Repeat Password')}"
+                                            id="exampleRepeatPassword"  name="userPwChk" th:value="${#strings.defaultString(loginVO?.passwordChk, '')}">
                                     </div>
                                 </div>
                                 <button type="submit" class="btn btn-primary btn-user btn-block">

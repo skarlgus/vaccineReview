@@ -51,180 +51,51 @@ public class mainPageService {
     }
 
     /**************************************************
-     *   note : 코로나19 감염 현황 API
+     *   note : 코로나19 감염 현황
      * ************************************************/
     public HashMap<String, Integer> coronaNow() throws IOException{
 
-        /*오늘 날짜 구하기*/
+        /*date*/
         SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
 
-        Date now = new Date();
+        Calendar calendar = new GregorianCalendar();
 
-        String nowTime = sdf.format(now);
+        String date = "";
 
-        //return map
-        HashMap<String, Integer> map = new HashMap<String, Integer>();
-
-        /*코로나19 감염 현황 API 호출*/
+        //당일12시 기준 api호출 error시 전날기준 api호출
         try{
-
-            StringBuilder urlBuilder = new StringBuilder("http://openapi.data.go.kr/openapi/service/rest/Covid19/getCovid19InfStateJson"); /*URL*/
-            urlBuilder.append("?" + URLEncoder.encode("serviceKey","UTF-8") + "=IfLCgeoScc4aMugyZmYPSGCObIwFZjT%2F8p8ogPAyUe2avXdUgG9rCZE5E9cufGnGob0mtU1TKZubx1HgMJxpGA%3D%3D"); /*Service Key*/
-            urlBuilder.append("&" + URLEncoder.encode("pageNo","UTF-8") + "=" + URLEncoder.encode("1", "UTF-8")); /*페이지번호*/
-            urlBuilder.append("&" + URLEncoder.encode("numOfRows","UTF-8") + "=" + URLEncoder.encode("10", "UTF-8")); /*한 페이지 결과 수*/
-            urlBuilder.append("&" + URLEncoder.encode("startCreateDt","UTF-8") + "=" + URLEncoder.encode(nowTime, "UTF-8")); /*검색할 생성일 범위의 시작*/
-            urlBuilder.append("&" + URLEncoder.encode("endCreateDt","UTF-8") + "=" + URLEncoder.encode(nowTime, "UTF-8")); /*검색할 생성일 범위의 종료*/
-
-            URL url = new URL(urlBuilder.toString());
-
-            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-
-            conn.setRequestMethod("GET");
-
-            conn.setRequestProperty("Content-type", "application/json");
-
-            log.info("코로나19 감염 현황 API Response code: " + conn.getResponseCode());
-
-            BufferedReader rd;
-
-            if(conn.getResponseCode() >= 200 && conn.getResponseCode() <= 300) {
-                rd = new BufferedReader(new InputStreamReader(conn.getInputStream()));
-            } else {
-                rd = new BufferedReader(new InputStreamReader(conn.getErrorStream()));
-            }
-
-            StringBuilder sb = new StringBuilder();
-
-            String line;
-
-            while ((line = rd.readLine()) != null) {
-                sb.append(line);
-            }
-
-            rd.close();
-
-            conn.disconnect();
-            /*코로나19 감염 현황 API 종료*/
-
-            /*xml data json 가공*/
-            JSONObject jObject = XML.toJSONObject(sb.toString());
-
-            String text = jObject.toString(4);  //xml data 확인
-
-            JSONObject jResponse = jObject.getJSONObject("response");
-
-            JSONObject jBody = jResponse.getJSONObject("body");
-
-            JSONObject jItems = jBody.getJSONObject("items");
-
-            JSONObject jItem = jItems.getJSONObject("item");
-
-            int decideCnt = (int) jItem.get("decideCnt");   //누적확진자수
-            int deathCnt = (int) jItem.get("deathCnt");     //누적사망자수
-
-            map.put("decideCnt",decideCnt);
-            map.put("deathCnt",deathCnt);
-
-        } catch (Exception e) {
-            log.info("[ERROR] 코로나19 감염 현황 API 호출 error");
-            map.put("decideCnt",0);
-            map.put("deathCnt",0);
+            date = sdf.format(calendar.getTime());
+            return coronaNowAPI(date);
+        }catch (Exception e){
+            calendar.add(Calendar.DATE, -1);
+            date = sdf.format(calendar.getTime());
+            return coronaNowAPI(date);
         }
-        /*xml data json 가공종료*/
 
-        return map;
     }
 
     /**************************************************
-     *   note : 코로나19 연령별·성별감염 감염 현황 API
+     *   note : 코로나19 연령별·성별감염 감염 현황
      * ************************************************/
     public List<HashMap<String, Object>> coronaVaccine() throws IOException {
 
-        /*오늘 날짜 구하기*/
+        /*date*/
         SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
 
-        Date now = new Date();
+        Calendar calendar = new GregorianCalendar();
 
-        String nowTime = sdf.format(now);
+        String date = "";
 
-        //return listMap
-        List<HashMap<String, Object>> listMap = new ArrayList<HashMap<String, Object>>();
-
-        //retrun listMap에 추가될 map
-        HashMap<String, Object> map = new HashMap<String, Object>();
-
-        /*코로나19 연령별·성별감염 감염 현황 API 호출*/
+        //당일12시 기준 api호출 error시 전날기준 api호출
         try{
-            StringBuilder urlBuilder = new StringBuilder("http://openapi.data.go.kr/openapi/service/rest/Covid19/getCovid19GenAgeCaseInfJson"); /*URL*/
-            urlBuilder.append("?" + URLEncoder.encode("serviceKey","UTF-8") + "=IfLCgeoScc4aMugyZmYPSGCObIwFZjT%2F8p8ogPAyUe2avXdUgG9rCZE5E9cufGnGob0mtU1TKZubx1HgMJxpGA%3D%3D"); /*Service Key*/
-            urlBuilder.append("&" + URLEncoder.encode("pageNo","UTF-8") + "=" + URLEncoder.encode("1", "UTF-8")); /*페이지번호*/
-            urlBuilder.append("&" + URLEncoder.encode("numOfRows","UTF-8") + "=" + URLEncoder.encode("10", "UTF-8")); /*한 페이지 결과 수*/
-            urlBuilder.append("&" + URLEncoder.encode("startCreateDt","UTF-8") + "=" + URLEncoder.encode(nowTime, "UTF-8")); /*검색할 생성일 범위의 시작*/
-            urlBuilder.append("&" + URLEncoder.encode("endCreateDt","UTF-8") + "=" + URLEncoder.encode(nowTime, "UTF-8")); /*검색할 생성일 범위의 종료*/
-
-            URL url = new URL(urlBuilder.toString());
-
-            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-
-            conn.setRequestMethod("GET");
-
-            conn.setRequestProperty("Content-type", "application/json");
-
-            log.info("코로나19 연령별·성별감염 감염 현황 API Response code: " + conn.getResponseCode());
-
-            BufferedReader rd;
-
-            if(conn.getResponseCode() >= 200 && conn.getResponseCode() <= 300) {
-                rd = new BufferedReader(new InputStreamReader(conn.getInputStream()));
-            } else {
-                rd = new BufferedReader(new InputStreamReader(conn.getErrorStream()));
-            }
-
-            StringBuilder sb = new StringBuilder();
-
-            String line;
-
-            while ((line = rd.readLine()) != null) {
-                sb.append(line);
-            }
-
-            rd.close();
-
-            conn.disconnect();
-            /*코로나19 연령별·성별감염 감염 현황 API 종료*/
-
-            /*xml data json 가공*/
-            JSONObject jObject = XML.toJSONObject(sb.toString());
-
-            String text = jObject.toString(4);  //xml data 확인
-
-            JSONObject jResponse = jObject.getJSONObject("response");
-
-            JSONObject jBody = jResponse.getJSONObject("body");
-
-            JSONObject jItems = jBody.getJSONObject("items");
-
-            JSONArray jArray = jItems.getJSONArray("item");
-
-            if(jArray.length() > 0){
-                for(int i=0; i<jArray.length(); i++){
-                    JSONObject jsonObj = jArray.getJSONObject(i);
-                    Object confCaseRate = jsonObj.get("confCaseRate");   //확진률
-                    String gubun = (String) jsonObj.get("gubun");        //나이
-
-                    map.put(gubun,confCaseRate);
-                    listMap.add(map);
-                }
-            }
-
-        } catch (Exception e) {
-            log.info("[ERROR] 코로나19 백신 현황 API 호출 error");
-            map.put("0","0");
-            listMap.add(map);
+            date = sdf.format(calendar.getTime());
+            return coronaVaccineAPI(date);
+        }catch (Exception e){
+            calendar.add(Calendar.DATE, -1);
+            date = sdf.format(calendar.getTime());
+            return coronaVaccineAPI(date);
         }
-        /*xml data json 가공종료*/
 
-        return listMap;
     }
 
     /**************************************************
@@ -307,6 +178,168 @@ public class mainPageService {
         /*xml data json 가공종료*/
 
         return map;
+    }
+
+    /**************************************************
+     *   note : 코로나19 감염 현황 API
+     * ************************************************/
+    public HashMap<String, Integer> coronaNowAPI(String date) throws IOException{
+
+        //return map
+        HashMap<String, Integer> map = new HashMap<String, Integer>();
+
+        /*코로나19 감염 현황 API 호출*/
+        try{
+
+            StringBuilder urlBuilder = new StringBuilder("http://openapi.data.go.kr/openapi/service/rest/Covid19/getCovid19InfStateJson"); /*URL*/
+            urlBuilder.append("?" + URLEncoder.encode("serviceKey","UTF-8") + "=IfLCgeoScc4aMugyZmYPSGCObIwFZjT%2F8p8ogPAyUe2avXdUgG9rCZE5E9cufGnGob0mtU1TKZubx1HgMJxpGA%3D%3D"); /*Service Key*/
+            urlBuilder.append("&" + URLEncoder.encode("pageNo","UTF-8") + "=" + URLEncoder.encode("1", "UTF-8")); /*페이지번호*/
+            urlBuilder.append("&" + URLEncoder.encode("numOfRows","UTF-8") + "=" + URLEncoder.encode("10", "UTF-8")); /*한 페이지 결과 수*/
+            urlBuilder.append("&" + URLEncoder.encode("startCreateDt","UTF-8") + "=" + URLEncoder.encode(date, "UTF-8")); /*검색할 생성일 범위의 시작*/
+            urlBuilder.append("&" + URLEncoder.encode("endCreateDt","UTF-8") + "=" + URLEncoder.encode(date, "UTF-8")); /*검색할 생성일 범위의 종료*/
+
+            URL url = new URL(urlBuilder.toString());
+
+            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+
+            conn.setRequestMethod("GET");
+
+            conn.setRequestProperty("Content-type", "application/json");
+
+            log.info("코로나19 감염 현황 API Response code: " + conn.getResponseCode());
+
+            BufferedReader rd;
+
+            if(conn.getResponseCode() >= 200 && conn.getResponseCode() <= 300) {
+                rd = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+            } else {
+                rd = new BufferedReader(new InputStreamReader(conn.getErrorStream()));
+            }
+
+            StringBuilder sb = new StringBuilder();
+
+            String line;
+
+            while ((line = rd.readLine()) != null) {
+                sb.append(line);
+            }
+
+            rd.close();
+
+            conn.disconnect();
+            /*코로나19 감염 현황 API 종료*/
+
+            /*xml data json 가공*/
+            JSONObject jObject = XML.toJSONObject(sb.toString());
+
+            String text = jObject.toString(4);  //xml data 확인
+
+            JSONObject jResponse = jObject.getJSONObject("response");
+
+            JSONObject jBody = jResponse.getJSONObject("body");
+
+            JSONObject jItems = jBody.getJSONObject("items");
+
+            JSONObject jItem = jItems.getJSONObject("item");
+
+            int decideCnt = (int) jItem.get("decideCnt");   //누적확진자수
+            int deathCnt = (int) jItem.get("deathCnt");     //누적사망자수
+
+            map.put("decideCnt",decideCnt);
+            map.put("deathCnt",deathCnt);
+
+        } catch (Exception e) {
+            log.info("[ERROR] 코로나19 감염 현황 API 호출 error");
+            map.put("decideCnt",0);
+            map.put("deathCnt",0);
+        }
+        /*xml data json 가공종료*/
+
+        return map;
+    }
+
+    /**************************************************
+     *   note : 코로나19 연령별·성별감염 감염 현황 API
+     * ************************************************/
+    public List<HashMap<String, Object>> coronaVaccineAPI(String date) throws IOException {
+        //return listMap
+        List<HashMap<String, Object>> listMap = new ArrayList<HashMap<String, Object>>();
+
+        //retrun listMap에 추가될 map
+        HashMap<String, Object> map = new HashMap<String, Object>();
+
+        /*코로나19 연령별·성별감염 감염 현황 API 호출*/
+        try{
+            StringBuilder urlBuilder = new StringBuilder("http://openapi.data.go.kr/openapi/service/rest/Covid19/getCovid19GenAgeCaseInfJson"); /*URL*/
+            urlBuilder.append("?" + URLEncoder.encode("serviceKey","UTF-8") + "=IfLCgeoScc4aMugyZmYPSGCObIwFZjT%2F8p8ogPAyUe2avXdUgG9rCZE5E9cufGnGob0mtU1TKZubx1HgMJxpGA%3D%3D"); /*Service Key*/
+            urlBuilder.append("&" + URLEncoder.encode("pageNo","UTF-8") + "=" + URLEncoder.encode("1", "UTF-8")); /*페이지번호*/
+            urlBuilder.append("&" + URLEncoder.encode("numOfRows","UTF-8") + "=" + URLEncoder.encode("10", "UTF-8")); /*한 페이지 결과 수*/
+            urlBuilder.append("&" + URLEncoder.encode("startCreateDt","UTF-8") + "=" + URLEncoder.encode(date, "UTF-8")); /*검색할 생성일 범위의 시작*/
+            urlBuilder.append("&" + URLEncoder.encode("endCreateDt","UTF-8") + "=" + URLEncoder.encode(date, "UTF-8")); /*검색할 생성일 범위의 종료*/
+
+            URL url = new URL(urlBuilder.toString());
+
+            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+
+            conn.setRequestMethod("GET");
+
+            conn.setRequestProperty("Content-type", "application/json");
+
+            log.info("코로나19 연령별·성별감염 감염 현황 API Response code: " + conn.getResponseCode());
+
+            BufferedReader rd;
+
+            if(conn.getResponseCode() >= 200 && conn.getResponseCode() <= 300) {
+                rd = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+            } else {
+                rd = new BufferedReader(new InputStreamReader(conn.getErrorStream()));
+            }
+
+            StringBuilder sb = new StringBuilder();
+
+            String line;
+
+            while ((line = rd.readLine()) != null) {
+                sb.append(line);
+            }
+
+            rd.close();
+
+            conn.disconnect();
+            /*코로나19 연령별·성별감염 감염 현황 API 종료*/
+
+            /*xml data json 가공*/
+            JSONObject jObject = XML.toJSONObject(sb.toString());
+
+            String text = jObject.toString(4);  //xml data 확인
+
+            JSONObject jResponse = jObject.getJSONObject("response");
+
+            JSONObject jBody = jResponse.getJSONObject("body");
+
+            JSONObject jItems = jBody.getJSONObject("items");
+
+            JSONArray jArray = jItems.getJSONArray("item");
+
+            if(jArray.length() > 0){
+                for(int i=0; i<jArray.length(); i++){
+                    JSONObject jsonObj = jArray.getJSONObject(i);
+                    Object confCaseRate = jsonObj.get("confCaseRate");   //확진률
+                    String gubun = (String) jsonObj.get("gubun");        //나이
+
+                    map.put(gubun,confCaseRate);
+                    listMap.add(map);
+                }
+            }
+
+        } catch (Exception e) {
+            log.info("[ERROR] 코로나19 백신 현황 API 호출 error");
+            map.put("0","0");
+            listMap.add(map);
+        }
+        /*xml data json 가공종료*/
+
+        return listMap;
     }
 
 }

@@ -2,18 +2,14 @@ package com.vaccineReview.login.controller;
 
 import com.vaccineReview.login.service.loginService;
 import com.vaccineReview.login.vo.loginVO;
-import com.vaccineReview.security.SessionUser;
+
 import lombok.RequiredArgsConstructor;
-import lombok.Value;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpSession;
-import java.util.Map;
 
 /**
  * 소셜로그인 Controller
@@ -53,9 +49,36 @@ public class loginController {
     
     //회원가입 로직
     @PostMapping("/login/register")
-    public String registerUser(loginVO loginVO) {
-        service.joinUser(loginVO);
-        return "redirect:/layout/login";
+    public String registerUser(loginVO loginVO,Model model) {
+        //사용중인 이메일인지 체크
+        int count = service.checkUser(loginVO);
+
+        //중복 email 체크
+        if (count>0){
+            model.addAttribute("emailInfo","이미 회원가입된 email입니다.");  //중복 메일 msg
+            loginVO.setUserId("");                                                               //메일 초기화
+            model.addAttribute("loginVO",loginVO);                                   //loginVO
+            return "/layout/register";
+
+        //회원가입 진행
+        }else{
+            //비밀번호 체크
+            if(loginVO.getUserPw().equals(loginVO.getUserPwChk())){
+                service.joinUser(loginVO);
+                return "redirect:/layout/login";
+            }else{
+                model.addAttribute("pwInfo","비밀번호가 일치하지 않습니다.");  //비밀번호 불일치 msg
+                loginVO.setUserPw("");                                                           //비밀번호 초기화
+                loginVO.setUserPwChk("");                                                        //비밀번호 초기화
+                model.addAttribute("loginVO",loginVO);                               //loginVO
+
+
+
+                return "/layout/register";
+            }
+
+        }
+
     }
 
 }
