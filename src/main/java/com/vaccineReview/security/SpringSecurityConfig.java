@@ -47,23 +47,16 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
                 .headers().frameOptions().disable()
                 .and()
                 .authorizeRequests()
-                .antMatchers("/login/**","/layout/login/**").permitAll()
+                .antMatchers("/login/**","/layout/**").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()
-                //.oauth2Login()
                 .loginPage("/layout/login")
                 .loginProcessingUrl("/login_proc")
                 .defaultSuccessUrl("/",true).permitAll()
                 .successHandler(new customSuccessHandler()).permitAll()	// 성공시 수행할 핸들러
                 .and()
                 .logout()
-                .logoutUrl("/logout") /* 로그아웃 url*/
-                //.logoutSuccessUrl("/layout/login")
-                .invalidateHttpSession(true) /*로그아웃시 세션 제거*/
-                .deleteCookies("remember-me", "JSESSIONID") /*쿠키 제거*/
-                .clearAuthentication(true) /*권한정보 제거*/
-                .permitAll()
                 .and()
                 .oauth2Login()
                 .userInfoEndpoint()
