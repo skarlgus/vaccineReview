@@ -63,10 +63,10 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
                 .userService(customOAuth2UserService);
     }
 
-    @Bean
+    /*@Bean
     public ServletListenerRegistrationBean<HttpSessionEventPublisher> httpSessionEventPublisher() {
         return new ServletListenerRegistrationBean<HttpSessionEventPublisher>(new HttpSessionEventPublisher());
-    }
+    }*/
 
     @Override
     public void configure(AuthenticationManagerBuilder auth) throws Exception {

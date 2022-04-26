@@ -40,7 +40,9 @@ public class loginController {
 
     //로그인 뷰
     @GetMapping("/layout/login")
-    public String login() {
+    public String login(HttpServletRequest request, HttpServletResponse response) {
+        System.out.println(request.getAttribute("userMail"));
+
         return "layout/login";
     }
 
@@ -52,6 +54,9 @@ public class loginController {
         if (auth != null) {
             new SecurityContextLogoutHandler().logout(request, response, auth);
         }
+
+        //httpSession.invalidate();
+        //httpSession.removeAttribute("principal");
 
         return "redirect:/layout/login";
     }
@@ -65,7 +70,8 @@ public class loginController {
     //회원가입 로직
     @PostMapping("/login/register")
     public String registerUser(loginVO loginVO,Model model) {
-        //사용중인 이메일인지 체크
+
+        //회원가입
         int count = service.checkUser(loginVO);
 
         //중복 email 체크
@@ -77,6 +83,38 @@ public class loginController {
 
         //회원가입 진행
         }else{
+
+            //필수사항 체크(firstName, LastName, )
+            boolean returnURL = false;
+
+            if(loginVO.getUserFirstName().equals("")){
+                model.addAttribute("FirstNameChkMsg","first Name은 필수 입력 사항입니다.");  //msg
+                model.addAttribute("loginVO",loginVO);                                              //loginVO
+                returnURL = true;
+            }
+            if(loginVO.getUserLastName().equals("")) {
+                model.addAttribute("LastNameChkMsg","Last Name은 필수 입력 사항입니다.");  //msg
+                model.addAttribute("loginVO",loginVO);                                            //loginVO
+                returnURL = true;
+            }
+            if(loginVO.getUserId().equals("")){
+                model.addAttribute("emailInfo","email은 필수 입력 사항입니다.");     //msg
+                model.addAttribute("loginVO",loginVO);                                       //loginVO
+                returnURL = true;
+            }
+            if(loginVO.getUserPw().equals("")){
+                model.addAttribute("passWordChkMsg","Password는 필수 입력 사항입니다.");        //msg
+                model.addAttribute("loginVO",loginVO);                                                  //loginVO
+                returnURL = true;
+            }
+            if(loginVO.getUserPwChk().equals("")){
+                model.addAttribute("pwInfo","Repeat PW는 필수 입력 사항입니다.");     //msg
+                model.addAttribute("loginVO",loginVO);                                        //loginVO
+                returnURL = true;
+            }
+
+            if(returnURL) return "/layout/register";
+
             //비밀번호 체크
             if(loginVO.getUserPw().equals(loginVO.getUserPwChk())){
                 service.joinUser(loginVO);
@@ -86,8 +124,6 @@ public class loginController {
                 loginVO.setUserPw("");                                                           //비밀번호 초기화
                 loginVO.setUserPwChk("");                                                        //비밀번호 초기화
                 model.addAttribute("loginVO",loginVO);                               //loginVO
-
-
 
                 return "/layout/register";
             }

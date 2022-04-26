@@ -41,9 +41,11 @@ public class loginService implements UserDetailsService {
     private final loginMapper mapper;
 
     /**************************************************
-     *   note : 중복가입 체크
+     *   note : 회원가입 체크
      * ************************************************/
     public int checkUser(loginVO loginVO) {
+
+
         return mapper.checkUser(loginVO);
     }
 
