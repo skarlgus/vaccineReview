@@ -8,9 +8,9 @@
 	내      용 : MEMBER 테이블 ID 조회
 	-->
     <select id="getReviewBoard" resultType="com.vaccineReview.mainPage.vo.mainPageVO">
-        SELECT COUNT(1) || '건' AS boardCount
-        FROM BOARD
-        WHERE TO_CHAR(regdate,'YYYYMMDD') LIKE TO_CHAR(SYSDATE,'YYYYMMDD')
+        SELECT COUNT(1) || '건' AS boardCount                                    /*COUNT*/
+          FROM BOARD                                                             /*[BOARD]*/
+         WHERE TO_CHAR(regdate,'YYYYMMDD') LIKE TO_CHAR(SYSDATE,'YYYYMMDD')      /*REGDATE*/
     </select>
 
 </mapper>

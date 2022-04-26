@@ -41,8 +41,6 @@ public class loginController {
     //로그인 뷰
     @GetMapping("/layout/login")
     public String login(HttpServletRequest request, HttpServletResponse response) {
-        System.out.println(request.getAttribute("userMail"));
-
         return "layout/login";
     }
 
@@ -130,6 +128,27 @@ public class loginController {
 
         }
 
+    }
+
+    //비밀번호 찾기 뷰
+    @GetMapping("/login/forgot-password")
+    public String forgotPW() {
+        return "/layout/forgot-password";
+    }
+
+    //비밀번호 찾기 뷰
+    @PostMapping("/login/forgot-password")
+    public String forgotPassWord(String email,Model model) throws Exception{
+        //회원가입된 email인지 체크
+        int emailChk = service.registerEmailChk(email);
+
+        if(emailChk>0){
+            service.forgotPassWord(email);
+            return "redirect:/layout/login";
+        }else{
+            model.addAttribute("chkMsg","회원가입되지 않은 Email입니다.");
+            return "/layout/forgot-password";
+        }
     }
 
 }

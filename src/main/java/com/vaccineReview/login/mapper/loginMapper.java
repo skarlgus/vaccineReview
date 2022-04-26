@@ -18,4 +18,9 @@ public interface loginMapper {
     //회원가입
     void saveUser(loginVO loginVO);
 
+    //이메일 회원가입 체크
+    int registerEmailChk(String email);
+    
+    //비밀번호 찾기 비번 업데이트
+    void updatePw(String email, String encodePw);
 }

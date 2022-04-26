@@ -24,8 +24,6 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
 
     private final loginService loginService;
 
-    //private  final customSuccessHandler customSuccessHandler;
-
     /*
      *  스프링 시큐리티 앞단 설정
      * */
@@ -72,10 +70,10 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
     public void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(loginService).passwordEncoder(new BCryptPasswordEncoder());
     }
+
     @Bean
     public PasswordEncoder passwordEncoder(){
         return new BCryptPasswordEncoder();
     }
-
 
 }

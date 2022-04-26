@@ -8,12 +8,12 @@
 	내      용 : 로그인
 	-->
     <select id="getUserAccount" resultType="com.vaccineReview.login.vo.loginVO">
-        SELECT EMAIL as userId
-             , PASSWORD as userPw
-             , NAME as userLastName
-             , ROLE as userAuth
-          FROM MEMBER
-         WHERE EMAIL = #{userId}
+        SELECT EMAIL as userId         /*EMAIL*/
+             , PASSWORD as userPw      /*PASSWORD*/
+             , NAME as userLastName    /*NAME*/
+             , ROLE as userAuth        /*ROLS*/
+          FROM MEMBER                  /*[MEMBER]*/
+         WHERE EMAIL = #{userId}       /*EMAIL*/
     </select>
 
     <!--
@@ -22,10 +22,10 @@
 	내      용 : 회원가입 중복체크
 	-->
     <select id="checkUser" resultType="Int">
-        SELECT COUNT(1)
-          FROM MEMBER
-         WHERE EMAIL = #{userId}
-           AND ROLE = '회원가입'
+        SELECT COUNT(1)            /*COUNT*/
+          FROM MEMBER              /*[MEMBER]*/
+         WHERE EMAIL = #{userId}   /*EMAIL*/
+           AND ROLE = '회원가입'    /*ROLE*/
     </select>
 
     <!--
@@ -34,17 +34,39 @@
 	내      용 : 회원가입
 	-->
     <insert id="saveUser" parameterType="com.vaccineReview.login.vo.loginVO">
-        INSERT INTO MEMBER (
-                    EMAIL
-                  , NAME
-                  , PASSWORD
-                  , ROLE
+        INSERT INTO MEMBER (                                /*[MEMBER]*/
+                    EMAIL                                   /*EMAIL*/
+                  , NAME                                    /*NAME*/
+                  , PASSWORD                                /*PASSWORD*/
+                  , ROLE                                    /*ROLE*/
            ) VALUES (
-                    #{userId}
-                  , #{userFirstName} || #{userLastName}
-                  , #{userPw}
-                  , #{userAuth}
+                    #{userId}                               /*EMAIL*/
+                  , #{userFirstName} || #{userLastName}     /*NAME*/
+                  , #{userPw}                               /*PASSWORD*/
+                  , #{userAuth}                             /*ROLE*/
                   )
     </insert>
+
+    <!--
+	작  성  자 : 남기현
+	작  성  일 : 2021.04.26
+	내      용 : 이메일 회원가입 체크
+	-->
+    <select id="registerEmailChk" resultType="Int">
+        SELECT COUNT(1)             /*COUNT*/
+          FROM MEMBER               /*[MEMBER]*/
+         WHERE EMAIL = #{email}     /*EMAIL*/
+    </select>
+
+    <!--
+	작  성  자 : 남기현
+	작  성  일 : 2021.04.26
+	내      용 : 비밀번호 찾기 비번 업데이트
+	-->
+    <update id="updatePw" >
+        UPDATE MEMBER                       /*[MEMBER]*/
+           SET PASSWORD = #{encodePw}       /*PASSWORD*/
+         WHERE EMAIL = #{email}             /*EMAIL*/
+    </update>
 
 </mapper>

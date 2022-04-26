@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+
+    <div class="test" style="width: 400px;height: 215px;border-radius: 2px;box-shadow: 4px 8px 16px 0 rgba(0,0,0,0.1);background-color: #5CA4EA;">
+        <div class="title" style="width:100%; height:40px;color:white;font-size:25px;text-align:center;margin-top:15px;">VaccineReview</div>
+        <br>
+        <div class="subTitle" style="width:100%;height:30px;color:white;font-size:20px;text-align:center;">변경된 비밀번호 안내</div>
+        <br>
+        <div class="content" th:text="${pw}" style="width: 90%;height: 35px;border: solid 1px white;text-align: center;line-height: 35px;margin-left: 18px;background-color:white;"></div>
+        <br>
+        <div class="fotter" style="width:100%;text-align:center;color:white;">변경된 비밀번호로 재로그인 가능합니다.</div>
+    </div>
+
+</body>
+</html>
