@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.thymeleaf.context.Context;
+import org.thymeleaf.expression.Strings;
 import org.thymeleaf.spring5.SpringTemplateEngine;
 import org.thymeleaf.standard.expression.MessageExpression;
 
@@ -29,6 +30,7 @@ import java.util.Date;
 import java.util.Map;
 import java.util.Random;
 
+import org.apache.commons.lang3.RandomStringUtils;
 /**
  * 소셜로그인 Service
  * @author kh
@@ -101,6 +103,7 @@ public class loginService implements UserDetailsService {
         MimeMessageHelper helper = new MimeMessageHelper(message, true);
 
         //10자리 랜덤 문자열
+        /*
         int leftLimit = 97; // letter 'a'
         int rightLimit = 122; // letter 'z'
         int targetStringLength = 10;
@@ -111,7 +114,9 @@ public class loginService implements UserDetailsService {
                     (random.nextFloat() * (rightLimit - leftLimit + 1));
             buffer.append((char) randomLimitedInt);
         }
-        String generatedString = buffer.toString();
+        */
+
+        String generatedString = RandomStringUtils.randomAlphanumeric(10);
 
         //메일 제목 설정
         helper.setSubject("VaccineReview 비밀번호 변경 안내");
