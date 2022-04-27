@@ -103,7 +103,7 @@ public class loginService implements UserDetailsService {
         MimeMessageHelper helper = new MimeMessageHelper(message, true);
 
         //10자리 랜덤 문자열
-        /*
+
         int leftLimit = 97; // letter 'a'
         int rightLimit = 122; // letter 'z'
         int targetStringLength = 10;
@@ -114,9 +114,9 @@ public class loginService implements UserDetailsService {
                     (random.nextFloat() * (rightLimit - leftLimit + 1));
             buffer.append((char) randomLimitedInt);
         }
-        */
+        String generatedString = buffer.toString();
 
-        String generatedString = RandomStringUtils.randomAlphanumeric(10);
+        /*String generatedString = RandomStringUtils.randomAlphanumeric(10);*/
 
         //메일 제목 설정
         helper.setSubject("VaccineReview 비밀번호 변경 안내");
