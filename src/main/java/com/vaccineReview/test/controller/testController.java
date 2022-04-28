@@ -22,6 +22,8 @@ public class testController {
         //젠킨스 weebhook테스트
         
         //슬랙 연동 테스트
+        
+        //자동 배포 테스트
     }
 
 
