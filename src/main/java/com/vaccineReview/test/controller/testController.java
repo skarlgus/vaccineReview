@@ -20,6 +20,8 @@ public class testController {
     @GetMapping("/test")
     public void test(Model model) {
         //젠킨스 weebhook테스트
+        
+        //슬랙 연동 테스트
     }
 
 
