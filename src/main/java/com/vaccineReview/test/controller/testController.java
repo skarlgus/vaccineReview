@@ -19,15 +19,7 @@ public class testController {
 
     @GetMapping("/test")
     public void test(Model model) {
-        Map<String,Object> map = service.test();
-        System.out.println("@@@@@@#######$$$$$$$$$$$$$"+map.get("TEST"));
-        System.out.println("map = " + map);
-        System.out.println("map = " + map.size());
-
-
-
-
-
+        //젠킨스 weebhook테스트
     }
 
 

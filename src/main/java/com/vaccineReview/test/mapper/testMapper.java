@@ -7,5 +7,4 @@ import java.util.Map;
 
 @Mapper
 public interface testMapper {
-    Map<String, Object> test();
 }
