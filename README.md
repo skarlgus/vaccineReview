@@ -1,4 +1,4 @@
-# Toyroject
+# ToyProject
 vaccinReview for README.md
 
 ### 📌방향성
