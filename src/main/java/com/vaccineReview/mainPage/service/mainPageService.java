@@ -162,7 +162,7 @@ public class mainPageService {
                 int thirdCnt = (int) jsonObj.get("thirdCnt");  //3차 접종자 수
 
                 double totalKorean = 51780000;   //대한민국 인구 수
-                
+
                 double thirdCntR = (double) 100 / totalKorean * thirdCnt;   //3차 접종률
 
                 int thirdCntRate = (int) Math.round(thirdCntR);   //반올림
@@ -342,4 +342,17 @@ public class mainPageService {
         return listMap;
     }
 
+    /**************************************************
+     *   note : 결제 내역 저장
+     * ************************************************/
+    public void saveImport(Map<String, Object> param) {
+        mapper.saveImport(param);
+    }
+
+    /**************************************************
+     *   note : 결제 내역 조회
+     * ************************************************/
+    public int searchImport(String userMail) {
+        return mapper.searchImport(userMail);
+    }
 }

@@ -1,11 +1,15 @@
 package com.vaccineReview.mainPage.controller;
 
+import com.sun.mail.imap.protocol.MODSEQ;
 import com.vaccineReview.mainPage.service.mainPageService;
 import com.vaccineReview.mainPage.vo.mainPageVO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
@@ -38,6 +42,13 @@ public class mainPageController {
 
     @GetMapping("/")
     public String main(Model model) throws IOException {
+
+        //결제 여부 확인
+        String userMail = (String) httpSession.getAttribute("userMail");
+
+        int chkImport = service.searchImport(userMail);
+
+        model.addAttribute("chkImport",chkImport);
 
         DecimalFormat decFormat = new DecimalFormat("###,###");
 
@@ -81,5 +92,14 @@ public class mainPageController {
 
         return "index";
     };
+
+    @PostMapping("/mainPage/imPORT")
+    public String imPORT(@RequestParam Map<String, Object> param) {
+
+        param.put("userMail",httpSession.getAttribute("userMail"));
+        service.saveImport(param);
+
+        return "redirect:/index";
+    }
 
 }

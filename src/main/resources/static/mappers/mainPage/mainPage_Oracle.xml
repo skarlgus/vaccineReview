@@ -9,8 +9,31 @@
 	-->
     <select id="getReviewBoard" resultType="com.vaccineReview.mainPage.vo.mainPageVO">
         SELECT COUNT(1) || '건' AS boardCount                                    /*COUNT*/
-          FROM BOARD                                                             /*[BOARD]*/
-         WHERE TO_CHAR(regdate,'YYYYMMDD') LIKE TO_CHAR(SYSDATE,'YYYYMMDD')      /*REGDATE*/
+        FROM BOARD                                                             /*[BOARD]*/
+        WHERE TO_CHAR(regdate,'YYYYMMDD') LIKE TO_CHAR(SYSDATE,'YYYYMMDD')      /*REGDATE*/
+    </select>
+
+    <!--
+    작  성  자 : 남기현
+    작  성  일 : 2021.05.01
+    내      용 : MEMBER 결제내역 저장
+    -->
+    <update id="saveImport" parameterType="map">
+        UPDATE MEMBER                       /*[MEMBER]*/
+        SET IMPORT_ID = #{imp_uid}       /*IMPORT_ID*/
+        WHERE EMAIL = #{userMail}          /*EMAIL*/
+    </update>
+
+    <!--
+	작  성  자 : 남기현
+	작  성  일 : 2021.05.01
+	내      용 : MEMBER 결제ID 조회
+	-->
+    <select id="searchImport" resultType="Int">
+        SELECT COUNT(1)                  /*COUNT*/
+        FROM MEMBER                      /*[MEMBER]*/
+        WHERE EMAIL = #{userMail}        /*USERMAIL*/
+          AND IMPORT_ID IS NOT NULL      /*IMPORT_ID*/
     </select>
 
 </mapper>

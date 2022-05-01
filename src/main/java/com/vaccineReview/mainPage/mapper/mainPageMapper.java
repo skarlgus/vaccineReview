@@ -27,4 +27,8 @@ import java.util.Map;
 public interface mainPageMapper {
 
     mainPageVO getReviewBoard();
+
+    void saveImport(Map<String, Object> param);
+
+    int searchImport(String userMail);
 }

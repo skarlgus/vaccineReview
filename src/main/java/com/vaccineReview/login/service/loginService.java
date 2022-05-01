@@ -30,7 +30,7 @@ import java.util.Date;
 import java.util.Map;
 import java.util.Random;
 
-import org.apache.commons.lang3.RandomStringUtils;
+//import org.apache.commons.lang3.RandomStringUtils;
 /**
  * 소셜로그인 Service
  * @author kh
